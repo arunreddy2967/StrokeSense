@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - StrokeSense</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f8fc;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        /* NAVBAR */
+        nav {
+            height: 72px;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 23px;
+            font-weight: bold;
+            color: #163b65;
+        }
+
+        .brain-icon {
+            font-size: 30px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #374151;
+            font-size: 15px;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #1d6fa5;
+        }
+
+        .nav-links a.active {
+            color: #1d6fa5;
+            font-weight: 700;
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, #eaf5ff, #f8fbff);
+            padding: 70px 8%;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .hero-icon {
+            font-size: 55px;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 {
+            color: #163b65;
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            max-width: 800px;
+            margin: auto;
+            color: #5b6472;
+            font-size: 17px;
+        }
+
+        /* MAIN */
+        .container {
+            width: 86%;
+            max-width: 1200px;
+            margin: 45px auto;
+        }
+
+        .section {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 32px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 18px rgba(31, 41, 55, 0.06);
+            border: 1px solid #e7edf4;
+        }
+
+        .section h2 {
+            color: #163b65;
+            font-size: 27px;
+            margin-bottom: 15px;
+        }
+
+        .section h3 {
+            color: #1d6fa5;
+            margin-top: 20px;
+            margin-bottom: 8px;
+            font-size: 19px;
+        }
+
+        .section p {
+            color: #4b5563;
+            font-size: 15.5px;
+            margin-bottom: 12px;
+        }
+
+        /* STROKE TYPES */
+        .type-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .type-card {
+            background: #f7fafc;
+            border: 1px solid #e1e8ef;
+            border-radius: 12px;
+            padding: 22px;
+        }
+
+        .type-card h3 {
+            margin-top: 0;
+        }
+
+        /* ATTRIBUTES */
+        .attribute-table-wrapper {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        .attribute-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        .attribute-table th {
+            background: #163b65;
+            color: #ffffff;
+            padding: 14px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .attribute-table td {
+            padding: 13px 14px;
+            border-bottom: 1px solid #e5e7eb;
+            color: #4b5563;
+            font-size: 14px;
+            vertical-align: top;
+        }
+
+        .attribute-table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        .attribute-table td:first-child {
+            color: #163b65;
+            font-weight: 700;
+        }
+
+        /* VALUE CARDS */
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .value-card {
+            background: #f8fbff;
+            border-left: 4px solid #1d6fa5;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .value-card h3 {
+            margin: 0 0 8px;
+            color: #163b65;
+        }
+
+        .value-card p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        /* WORKFLOW */
+        .workflow {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .workflow-step {
+            text-align: center;
+            background: #f7fafc;
+            border: 1px solid #dfe7ef;
+            border-radius: 10px;
+            padding: 20px 10px;
+            position: relative;
+        }
+
+        .workflow-step .number {
+            width: 35px;
+            height: 35px;
+            margin: 0 auto 10px;
+            border-radius: 50%;
+            background: #1d6fa5;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .workflow-step h3 {
+            margin: 0;
+            font-size: 15px;
+        }
+
+        .workflow-step p {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* FAST */
+        .fast-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .fast-card {
+            text-align: center;
+            padding: 22px 15px;
+            background: #f8fafc;
+            border-radius: 10px;
+            border: 1px solid #e3e9ef;
+        }
+
+        .fast-letter {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1d6fa5;
+            margin-bottom: 5px;
+        }
+
+        .fast-card h3 {
+            margin: 0 0 5px;
+            color: #163b65;
+        }
+
+        .fast-card p {
+            margin: 0;
+            font-size: 13px;
+        }
+
+        /* TECHNOLOGY */
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .tech-item {
+            background: #eef6fc;
+            border: 1px solid #d5e7f4;
+            color: #16466f;
+            padding: 10px 17px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* DISCLAIMER */
+        .disclaimer {
+            background: #fff8e8;
+            border: 1px solid #f1d99b;
+            border-left: 5px solid #d69e2e;
+            padding: 22px;
+            border-radius: 10px;
+        }
+
+        .disclaimer h2 {
+            color: #805f12;
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .disclaimer p {
+            color: #66501a;
+            margin: 0;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #163b65;
+            color: #ffffff;
+            text-align: center;
+            padding: 25px 15px;
+            margin-top: 50px;
+        }
+
+        footer p {
+            font-size: 14px;
+            margin: 4px 0;
+            color: #e7eef6;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            nav {
+                padding: 0 4%;
+            }
+
+            .nav-links {
+                gap: 14px;
+            }
+
+            .type-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .value-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .workflow {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .fast-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+            nav {
+                height: auto;
+                padding: 15px;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero {
+                padding: 45px 20px;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .section {
+                padding: 22px;
+            }
+
+            .value-grid,
+            .workflow,
+            .fast-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="logo">
+            <span class="brain-icon">🧠</span>
+            <span>StrokeSense</span>
+        </div>
+
+        <div class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('risk_assessment') }}">Risk Assessment</a>
+            <a href="{{ url_for('history') }}">Assessment History</a>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('about') }}" class="active">About</a>
+            <a href="{{ url_for('account') }}">Account</a>
+        </div>
+    </nav>
+
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-icon">🧠</div>
+
+        <h1>About StrokeSense</h1>
+
+        <p>
+            StrokeSense is an ML-based stroke risk assessment system
+            designed to estimate stroke susceptibility using selected
+            demographic, medical, and lifestyle information.
+        </p>
+    </section>
+
+
+    <main class="container">
+
+        <!-- ABOUT -->
+        <section class="section">
+            <h2>What is StrokeSense?</h2>
+
+            <p>
+                StrokeSense is a machine learning based application developed
+                to provide a preliminary estimation of stroke risk from
+                selected health and lifestyle characteristics.
+            </p>
+
+            <p>
+                The system processes information such as age, gender,
+                hypertension, heart disease, BMI, average glucose level,
+                smoking status, marital status, work type, and residence type.
+                The information is processed by a trained classification model
+                to produce an estimated risk probability and risk category.
+            </p>
+
+            <p>
+                StrokeSense is designed as a supportive risk-assessment tool
+                and is not intended to replace professional medical evaluation
+                or diagnosis.
+            </p>
+        </section>
+
+
+        <!-- BRAIN STROKE -->
+        <section class="section">
+            <h2>What is Brain Stroke?</h2>
+
+            <p>
+                A stroke occurs when the blood supply to part of the brain is
+                interrupted or reduced. When brain cells do not receive enough
+                oxygen and nutrients, they can become damaged.
+            </p>
+
+            <p>
+                Stroke is a serious medical condition that can result in
+                neurological problems affecting movement, speech, and other
+                functions. Recognizing warning signs quickly and obtaining
+                appropriate medical attention is important.
+            </p>
+
+            <div class="type-grid">
+
+                <div class="type-card">
+                    <h3>Ischemic Stroke</h3>
+
+                    <p>
+                        An ischemic stroke occurs when a blood vessel supplying
+                        the brain becomes blocked, reducing or stopping blood
+                        flow to part of the brain.
+                    </p>
+                </div>
+
+                <div class="type-card">
+                    <h3>Hemorrhagic Stroke</h3>
+
+                    <p>
+                        A hemorrhagic stroke occurs when a blood vessel in the
+                        brain ruptures and causes bleeding within or around
+                        brain tissue.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ATTRIBUTES -->
+        <section class="section">
+            <h2>Stroke Risk Assessment Attributes</h2>
+
+            <p>
+                StrokeSense uses the following attributes from the Stroke
+                Prediction Dataset to generate a preliminary risk estimate.
+            </p>
+
+            <div class="attribute-table-wrapper">
+
+                <table class="attribute-table">
+
+                    <thead>
+                        <tr>
+                            <th>Attribute</th>
+                            <th>Meaning</th>
+                            <th>Values / Condition</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>Age</td>
+                            <td>
+                                Age of the individual in years.
+                            </td>
+                            <td>
+                                Numerical value.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Gender</td>
+                            <td>
+                                Gender recorded for the individual.
+                            </td>
+                            <td>
+                                Male, Female, Other.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Hypertension</td>
+                            <td>
+                                Indicates whether the individual has
+                                hypertension.
+                            </td>
+                            <td>
+                                Yes / No.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Heart Disease</td>
+                            <td>
+                                Indicates whether the individual has a
+                                recorded heart disease condition.
+                            </td>
+                            <td>
+                                Yes / No.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Average Glucose Level</td>
+                            <td>
+                                Average blood glucose measurement associated
+                                with the individual.
+                            </td>
+                            <td>
+                                Numerical value.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>BMI</td>
+                            <td>
+                                Body Mass Index representing a measure based
+                                on body weight and height.
+                            </td>
+                            <td>
+                                Numerical value.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Smoking Status</td>
+                            <td>
+                                Smoking status recorded for the individual.
+                            </td>
+                            <td>
+                                Never smoked, Formerly smoked, Smokes,
+                                Unknown.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Ever Married</td>
+                            <td>
+                                Marital status recorded in the dataset.
+                            </td>
+                            <td>
+                                Yes / No.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Work Type</td>
+                            <td>
+                                Employment category of the individual.
+                            </td>
+                            <td>
+                                Private, Self-employed, Govt job,
+                                Children, Never worked.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Residence Type</td>
+                            <td>
+                                Type of residence recorded for the individual.
+                            </td>
+                            <td>
+                                Urban / Rural.
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        </section>
+
+
+        <!-- ATTRIBUTE CONDITIONS -->
+        <section class="section">
+
+            <h2>Understanding the Assessment Conditions</h2>
+
+            <p>
+                The assessment form allows the user to provide values for
+                different health and lifestyle attributes. These values are
+                converted into a format that can be processed by the trained
+                machine learning pipeline.
+            </p>
+
+            <div class="value-grid">
+
+                <div class="value-card">
+                    <h3>Hypertension</h3>
+                    <p>
+                        Select <strong>Yes</strong> when hypertension is
+                        present and <strong>No</strong> when it is not recorded.
+                    </p>
+                </div>
+
+                <div class="value-card">
+                    <h3>Heart Disease</h3>
+                    <p>
+                        Select <strong>Yes</strong> when heart disease is
+                        present and <strong>No</strong> otherwise.
+                    </p>
+                </div>
+
+                <div class="value-card">
+                    <h3>Smoking</h3>
+                    <p>
+                        Select the available category that represents the
+                        individual's recorded smoking status.
+                    </p>
+                </div>
+
+                <div class="value-card">
+                    <h3>BMI</h3>
+                    <p>
+                        Enter the BMI value available for the individual.
+                        Missing BMI values in the training data are handled
+                        during preprocessing.
+                    </p>
+                </div>
+
+                <div class="value-card">
+                    <h3>Glucose Level</h3>
+                    <p>
+                        Enter the average glucose level associated with the
+                        individual's health record.
+                    </p>
+                </div>
+
+                <div class="value-card">
+                    <h3>Age</h3>
+                    <p>
+                        Enter the individual's age in years. Age is processed
+                        as a numerical feature by the ML pipeline.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- FAST -->
+        <section class="section">
+
+            <h2>Recognizing Stroke Warning Signs — FAST</h2>
+
+            <p>
+                FAST is a simple way of remembering important warning signs
+                associated with stroke.
+            </p>
+
+            <div class="fast-grid">
+
+                <div class="fast-card">
+                    <div class="fast-letter">F</div>
+                    <h3>Face</h3>
+                    <p>
+                        Look for sudden facial weakness or drooping.
+                    </p>
+                </div>
+
+                <div class="fast-card">
+                    <div class="fast-letter">A</div>
+                    <h3>Arm</h3>
+                    <p>
+                        Look for sudden weakness or difficulty raising an arm.
+                    </p>
+                </div>
+
+                <div class="fast-card">
+                    <div class="fast-letter">S</div>
+                    <h3>Speech</h3>
+                    <p>
+                        Look for sudden speech difficulty or unclear speech.
+                    </p>
+                </div>
+
+                <div class="fast-card">
+                    <div class="fast-letter">T</div>
+                    <h3>Time</h3>
+                    <p>
+                        Seek emergency medical attention immediately when
+                        stroke symptoms occur.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- HOW IT WORKS -->
+        <section class="section">
+
+            <h2>How StrokeSense Works</h2>
+
+            <p>
+                The system follows a sequence of steps to transform the
+                entered health information into a preliminary risk estimate.
+            </p>
+
+            <div class="workflow">
+
+                <div class="workflow-step">
+                    <div class="number">1</div>
+                    <h3>Health Information</h3>
+                    <p>
+                        User enters assessment details.
+                    </p>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="number">2</div>
+                    <h3>Data Processing</h3>
+                    <p>
+                        Input is prepared for the ML pipeline.
+                    </p>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="number">3</div>
+                    <h3>ML Prediction</h3>
+                    <p>
+                        The trained model estimates risk probability.
+                    </p>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="number">4</div>
+                    <h3>Risk Category</h3>
+                    <p>
+                        The probability is evaluated using the selected
+                        decision threshold.
+                    </p>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="number">5</div>
+                    <h3>Assessment Result</h3>
+                    <p>
+                        The estimated risk is displayed and stored.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- DISCLAIMER -->
+        <section class="section disclaimer">
+
+            <h2>Important Health Information</h2>
+
+            <p>
+                StrokeSense provides an estimated ML-based risk assessment
+                based on the information entered by the user. The result is
+                intended for preliminary assessment and educational or
+                decision-support purposes. It does not diagnose stroke and
+                does not replace evaluation by a qualified healthcare
+                professional. If someone experiences sudden symptoms
+                associated with stroke, seek emergency medical attention
+                immediately.
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+        <p><strong>🧠 StrokeSense</strong></p>
+        <p>ML-Driven Stroke Risk Prediction</p>
+        <p>© 2026 StrokeSense. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

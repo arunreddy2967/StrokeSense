@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StrokeSense | Assessment History</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">
+        <div class="logo-icon">🧠</div>
+        <span class="logo-stroke">Stroke</span><span class="logo-sense">Sense</span>
+    </div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/risk-assessment">Risk Assessment</a>
+        <a href="/history" class="active">Assessment History</a>
+        <a href="#">Dashboard</a>
+        <a href="#">About</a>
+        <a href="/account">Account</a>
+    </nav>
+
+</header>
+
+
+<main class="history-page">
+
+    <h1>Assessment History</h1>
+
+    <section class="history-card">
+
+        <!-- FILTERS -->
+
+        <form method="GET" action="/history">
+
+            <div class="history-filters">
+
+                <div class="filter-group">
+
+                    <label for="from-date">
+                        From Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="from-date"
+                        name="from_date"
+                        value="{{ from_date }}"
+                    >
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label for="to-date">
+                        To Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="to-date"
+                        name="to_date"
+                        value="{{ to_date }}"
+                    >
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label for="risk-filter">
+                        Risk Category
+                    </label>
+
+                    <select
+                        id="risk-filter"
+                        name="risk_category"
+                    >
+
+                        <option
+                            value=""
+                            {% if not risk_category %}selected{% endif %}
+                        >
+                            All Categories
+                        </option>
+
+                        <option
+                            value="HIGH RISK"
+                            {% if risk_category == "HIGH RISK" %}selected{% endif %}
+                        >
+                            High Risk
+                        </option>
+
+                        <option
+                            value="LOW RISK"
+                            {% if risk_category == "LOW RISK" %}selected{% endif %}
+                        >
+                            Low Risk
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="filter-group search-group">
+
+                    <label for="search">
+                        Search
+                    </label>
+
+                    <input
+                        type="text"
+                        id="search"
+                        name="search"
+                        value="{{ search }}"
+                        placeholder="Search assessment..."
+                    >
+
+                </div>
+
+
+                <button
+                    class="filter-button"
+                    type="submit"
+                >
+                    Apply Filters
+                </button>
+
+            </div>
+
+        </form>
+
+
+        <!-- HISTORY TABLE -->
+
+        <div class="table-container">
+
+            <table class="history-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Assessment ID</th>
+
+                        <th>Date</th>
+
+                        <th>Age</th>
+
+                        <th>Gender</th>
+
+                        <th>Glucose Level</th>
+
+                        <th>BMI</th>
+
+                        <th>Risk Percentage</th>
+
+                        <th>Risk Category</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% if assessments %}
+
+                        {% for assessment in assessments %}
+
+                        <tr>
+
+                            <td>
+                                AS-{{ "%03d"|format(assessment.assessment_id) }}
+                            </td>
+
+
+                            <td>
+                                {{ assessment.assessment_date.strftime("%d %b %Y") }}
+                            </td>
+
+
+                            <td>
+                                {{ assessment.age|int }}
+                            </td>
+
+
+                            <td>
+                                {{ assessment.gender }}
+                            </td>
+
+
+                            <td>
+                                {{ "%.1f"|format(assessment.avg_glucose_level) }}
+                            </td>
+
+
+                            <td>
+                                {{ "%.1f"|format(assessment.bmi) }}
+                            </td>
+
+
+                            <td>
+                                {{ "%.2f"|format(assessment.risk_probability * 100) }}%
+                            </td>
+
+
+                            <td>
+
+                                {% if assessment.risk_category == "HIGH RISK" %}
+
+                                    <span class="history-risk high">
+                                        HIGH RISK
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="history-risk low">
+                                        LOW RISK
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+                                <a
+                                    href="/assessment/{{ assessment.assessment_id }}"
+                                    class="view-button"
+                                >
+                                    View
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+
+                    {% else %}
+
+                        <tr>
+
+                            <td
+                                colspan="9"
+                                style="text-align: center; padding: 30px;"
+                            >
+                                No assessments found.
+                            </td>
+
+                        </tr>
+
+                    {% endif %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer class="footer">
+    © 2026 StrokeSense. All rights reserved.
+</footer>
+
+</body>
+</html>

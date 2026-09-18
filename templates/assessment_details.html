@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StrokeSense | Assessment Details</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">
+        <div class="logo-icon">🧠</div>
+        <span class="logo-stroke">Stroke</span><span class="logo-sense">Sense</span>
+    </div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/risk-assessment">Risk Assessment</a>
+        <a href="/history" class="active">Assessment History</a>
+        <a href="#">Dashboard</a>
+        <a href="#">About</a>
+        <a href="/account">Account</a>
+    </nav>
+
+</header>
+
+
+<main class="details-page">
+
+    <a href="/history" class="back-link">
+        ← Back to History
+    </a>
+
+    <h1>Assessment Details</h1>
+
+
+    <!-- Risk Summary -->
+
+    <section class="details-risk-card">
+
+        <div class="details-risk-header">
+
+            <div>
+                <h2>Risk Assessment Summary</h2>
+
+                <p>
+                    Assessment ID:
+                    AS-{{ "%03d"|format(assessment.assessment_id) }}
+                </p>
+            </div>
+
+            {% if assessment.risk_category == "HIGH RISK" %}
+
+                <span class="details-risk-badge high">
+                    HIGH RISK
+                </span>
+
+            {% else %}
+
+                <span class="details-risk-badge low">
+                    LOW RISK
+                </span>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="details-risk-value">
+
+            <span>Estimated Risk</span>
+
+            <strong>
+                {{ "%.2f"|format(assessment.risk_probability * 100) }}%
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <!-- Patient Information -->
+
+    <section class="details-section">
+
+        <h2>Patient Information</h2>
+
+        <div class="details-grid">
+
+            <div class="detail-item">
+                <span>Gender</span>
+                <strong>{{ assessment.gender }}</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Age</span>
+                <strong>{{ assessment.age|int }} years</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Marital Status</span>
+                <strong>{{ assessment.ever_married }}</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Residence Type</span>
+                <strong>{{ assessment.residence_type }}</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Medical Information -->
+
+    <section class="details-section">
+
+        <h2>Medical Information</h2>
+
+        <div class="details-grid">
+
+            <div class="detail-item">
+                <span>Hypertension</span>
+
+                <strong>
+                    {% if assessment.hypertension == 1 %}
+                        Yes
+                    {% else %}
+                        No
+                    {% endif %}
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+                <span>Heart Disease</span>
+
+                <strong>
+                    {% if assessment.heart_disease == 1 %}
+                        Yes
+                    {% else %}
+                        No
+                    {% endif %}
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+                <span>Average Glucose Level</span>
+
+                <strong>
+                    {{ "%.1f"|format(assessment.avg_glucose_level) }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+                <span>BMI</span>
+
+                <strong>
+                    {{ "%.1f"|format(assessment.bmi) }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Lifestyle Information -->
+
+    <section class="details-section">
+
+        <h2>Lifestyle Information</h2>
+
+        <div class="details-grid">
+
+            <div class="detail-item">
+                <span>Work Type</span>
+                <strong>{{ assessment.work_type }}</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Smoking Status</span>
+                <strong>{{ assessment.smoking_status }}</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Assessment Information -->
+
+    <section class="details-section">
+
+        <h2>Assessment Information</h2>
+
+        <div class="details-grid">
+
+            <div class="detail-item">
+                <span>Assessment Date</span>
+
+                <strong>
+                    {{ assessment.assessment_date.strftime("%d %B %Y, %I:%M %p") }}
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Assessment Threshold</span>
+
+                <strong>60%</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Health Notice -->
+
+    <section class="details-notice">
+
+        <h3>Important Health Notice</h3>
+
+        <p>
+            This result is an ML-based risk estimate generated from the
+            health information provided during the assessment. It is intended
+            for awareness and decision support and should not be considered
+            a substitute for professional medical diagnosis.
+        </p>
+
+    </section>
+
+
+    <div class="details-actions">
+
+        <a href="/risk-assessment" class="details-primary-button">
+            New Assessment
+        </a>
+
+        <a href="/history" class="details-secondary-button">
+            View History
+        </a>
+
+    </div>
+
+</main>
+
+
+<footer class="footer">
+    © 2026 StrokeSense. All rights reserved.
+</footer>
+
+</body>
+</html>

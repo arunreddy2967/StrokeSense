@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>StrokeSense | Patients</title>
+
+
+    <style>
+
+        /* ==========================================
+           GENERAL
+        ========================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #ffffff;
+            color: #173f70;
+        }
+
+
+        /* ==========================================
+           NAVBAR
+        ========================================== */
+
+        .navbar {
+            height: 78px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            background: #ffffff;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+
+        .logo-icon {
+            font-size: 25px;
+        }
+
+
+        .logo-stroke {
+            color: #174f87;
+        }
+
+
+        .logo-sense {
+            color: #36b9c8;
+        }
+
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+
+        nav a {
+            text-decoration: none;
+            color: #174f87;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+
+        nav a:hover {
+            color: #27b7c7;
+        }
+
+
+        /* ==========================================
+           PAGE
+        ========================================== */
+
+        .patients-page {
+            width: 86%;
+            max-width: 1250px;
+            margin: 45px auto 80px;
+        }
+
+
+        .patients-page h1 {
+            text-align: center;
+            margin: 0 0 28px;
+            font-size: 30px;
+            color: #123f72;
+        }
+
+
+        /* ==========================================
+           TABS
+        ========================================== */
+
+        .dashboard-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            border-bottom: 1px solid #e5e5e5;
+            margin-bottom: 28px;
+        }
+
+
+        .dashboard-tab {
+            padding: 13px 18px;
+            text-decoration: none;
+            color: #174f87;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+
+        .dashboard-tab:hover {
+            color: #159fb2;
+        }
+
+
+        .dashboard-tab.active {
+            color: #159fb2;
+            border-bottom: 3px solid #31bdc9;
+        }
+
+
+        /* ==========================================
+           SEARCH
+        ========================================== */
+
+        .search-section {
+            background: #ffffff;
+            border: 1px solid #e5edf3;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 22px;
+            box-shadow: 0 4px 14px rgba(20, 70, 110, 0.06);
+        }
+
+
+        .search-section label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #174f87;
+            margin-bottom: 9px;
+        }
+
+
+        .search-row {
+            display: flex;
+            gap: 10px;
+        }
+
+
+        .search-input {
+            flex: 1;
+            height: 44px;
+            border: 1px solid #d5dfe8;
+            border-radius: 6px;
+            padding: 0 14px;
+            font-size: 14px;
+            outline: none;
+        }
+
+
+        .search-input:focus {
+            border-color: #2db6c7;
+        }
+
+
+        .search-button {
+            height: 44px;
+            padding: 0 25px;
+            border: none;
+            border-radius: 6px;
+            background: #174f87;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+
+        .search-button:hover {
+            background: #123f72;
+        }
+
+
+        .clear-button {
+            height: 44px;
+            padding: 0 20px;
+            border: 1px solid #d5dfe8;
+            border-radius: 6px;
+            background: #ffffff;
+            color: #174f87;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+
+        .clear-button:hover {
+            background: #f5f8fa;
+        }
+
+
+        /* ==========================================
+           TABLE CARD
+        ========================================== */
+
+        .patients-card {
+            background: #ffffff;
+            border: 1px solid #e5edf3;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 14px rgba(20, 70, 110, 0.06);
+        }
+
+
+        .patients-card-header {
+            padding: 20px;
+            border-bottom: 1px solid #e8edf2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+
+        .patients-card-header h2 {
+            margin: 0;
+            font-size: 18px;
+            color: #164f87;
+        }
+
+
+        .record-count {
+            font-size: 12px;
+            color: #758596;
+        }
+
+
+        /* ==========================================
+           TABLE
+        ========================================== */
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+
+        th {
+            background: #f5f9fc;
+            color: #174f87;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 15px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e9ef;
+            white-space: nowrap;
+        }
+
+
+        td {
+            padding: 15px 12px;
+            font-size: 13px;
+            color: #44566a;
+            border-bottom: 1px solid #edf1f4;
+            white-space: nowrap;
+        }
+
+
+        tr:hover td {
+            background: #fafcfd;
+        }
+
+
+        /* ==========================================
+           ASSESSMENT ID
+        ========================================== */
+
+        .assessment-id {
+            font-weight: 700;
+            color: #174f87;
+        }
+
+
+        /* ==========================================
+           RISK
+        ========================================== */
+
+        .risk-percentage {
+            font-weight: 700;
+        }
+
+
+        .risk-high {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: #fdeaea;
+            color: #d64545;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+
+        .risk-low {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: #e8f7ef;
+            color: #23915b;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+
+        /* ==========================================
+           VIEW BUTTON
+        ========================================== */
+
+        .view-button {
+            display: inline-block;
+            padding: 7px 14px;
+            border-radius: 5px;
+            background: #174f87;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+
+        .view-button:hover {
+            background: #123f72;
+        }
+
+
+        /* ==========================================
+           EMPTY STATE
+        ========================================== */
+
+        .empty-state {
+            text-align: center;
+            padding: 55px 20px;
+            color: #778797;
+        }
+
+
+        .empty-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+
+        .empty-state h3 {
+            margin: 0 0 8px;
+            color: #174f87;
+            font-size: 18px;
+        }
+
+
+        .empty-state p {
+            margin: 0;
+            font-size: 13px;
+        }
+
+
+        /* ==========================================
+           FOOTER
+        ========================================== */
+
+        .footer {
+            text-align: center;
+            padding: 25px;
+            color: #666666;
+            font-size: 12px;
+            border-top: 1px solid #eeeeee;
+        }
+
+
+        /* ==========================================
+           RESPONSIVE
+        ========================================== */
+
+        @media (max-width: 950px) {
+
+            .navbar {
+                padding: 0 4%;
+            }
+
+            nav {
+                gap: 15px;
+            }
+
+            .patients-page {
+                width: 92%;
+            }
+
+            .dashboard-tabs {
+                gap: 10px;
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                height: auto;
+                padding: 18px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 14px;
+            }
+
+            .dashboard-tabs {
+                overflow-x: auto;
+                justify-content: flex-start;
+            }
+
+            .search-row {
+                flex-direction: column;
+            }
+
+            .search-button,
+            .clear-button {
+                justify-content: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ==========================================
+     NAVIGATION
+========================================== -->
+
+<header class="navbar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            🧠
+        </div>
+
+        <span class="logo-stroke">
+            Stroke
+        </span>
+
+        <span class="logo-sense">
+            Sense
+        </span>
+
+    </div>
+
+
+    <nav>
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/risk-assessment">
+            Risk Assessment
+        </a>
+
+        <a href="/history">
+            Assessment History
+        </a>
+
+        <a href="/dashboard">
+            Dashboard
+        </a>
+
+        <a href="#">
+            About
+        </a>
+
+        <a href="/account">
+            Account
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- ==========================================
+     PATIENTS
+========================================== -->
+
+<main class="patients-page">
+
+
+    <h1>
+        Patients
+    </h1>
+
+
+
+    <!-- ==========================================
+         DASHBOARD TABS
+    =========================================== -->
+
+    <div class="dashboard-tabs">
+
+        <a href="/dashboard"
+           class="dashboard-tab">
+            Assessments
+        </a>
+
+
+        <a href="/analytics"
+           class="dashboard-tab">
+            Analytics
+        </a>
+
+
+        <a href="/patients"
+           class="dashboard-tab active">
+            Patients
+        </a>
+
+
+        <a href="#"
+           class="dashboard-tab">
+            Reports
+        </a>
+
+
+        <a href="#"
+           class="dashboard-tab">
+            Settings
+        </a>
+
+    </div>
+
+
+
+    <!-- ==========================================
+         SEARCH
+    =========================================== -->
+
+    <section class="search-section">
+
+        <form
+            method="GET"
+            action="/patients"
+        >
+
+            <label for="search">
+                Search Patients
+            </label>
+
+
+            <div class="search-row">
+
+                <input
+                    type="text"
+                    id="search"
+                    name="search"
+                    class="search-input"
+                    placeholder="Search by Assessment ID, Gender or Risk Category..."
+                    value="{{ search }}"
+                >
+
+
+                <button
+                    type="submit"
+                    class="search-button"
+                >
+                    Search
+                </button>
+
+
+                {% if search %}
+
+                    <a
+                        href="/patients"
+                        class="clear-button"
+                    >
+                        Clear
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        </form>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         PATIENT TABLE
+    =========================================== -->
+
+    <section class="patients-card">
+
+
+        <div class="patients-card-header">
+
+            <h2>
+                Patient Assessments
+            </h2>
+
+
+            <span class="record-count">
+
+                {{ patients|length }}
+
+                record{% if patients|length != 1 %}s{% endif %}
+
+            </span>
+
+        </div>
+
+
+
+        <div class="table-wrapper">
+
+
+            {% if patients %}
+
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Assessment ID
+                        </th>
+
+                        <th>
+                            Date
+                        </th>
+
+                        <th>
+                            Age
+                        </th>
+
+                        <th>
+                            Gender
+                        </th>
+
+                        <th>
+                            Glucose Level
+                        </th>
+
+                        <th>
+                            BMI
+                        </th>
+
+                        <th>
+                            Risk %
+                        </th>
+
+                        <th>
+                            Risk Category
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    {% for patient in patients %}
+
+
+                    <tr>
+
+
+                        <td>
+
+                            <span class="assessment-id">
+
+                                AS-{{ "%03d"|format(
+                                    patient.assessment_id
+                                ) }}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            {{ patient.assessment_date }}
+
+                        </td>
+
+
+                        <td>
+
+                            {{ "%.0f"|format(
+                                patient.age
+                            ) }}
+
+                        </td>
+
+
+                        <td>
+
+                            {{ patient.gender }}
+
+                        </td>
+
+
+                        <td>
+
+                            {{ "%.2f"|format(
+                                patient.avg_glucose_level
+                            ) }}
+
+                            mg/dL
+
+                        </td>
+
+
+                        <td>
+
+                            {% if patient.bmi is not none %}
+
+                                {{ "%.1f"|format(
+                                    patient.bmi
+                                ) }}
+
+                            {% else %}
+
+                                N/A
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="risk-percentage">
+
+                                {{ "%.2f"|format(
+                                    patient.risk_probability
+                                ) }}%
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+
+                            {% if patient.risk_category == "HIGH RISK" %}
+
+                                <span class="risk-high">
+                                    HIGH RISK
+                                </span>
+
+                            {% else %}
+
+                                <span class="risk-low">
+                                    LOW RISK
+                                </span>
+
+                            {% endif %}
+
+
+                        </td>
+
+
+                        <td>
+
+                            <a
+                                href="/assessment/{{ patient.assessment_id }}"
+                                class="view-button"
+                            >
+                                View
+                            </a>
+
+                        </td>
+
+
+                    </tr>
+
+
+                    {% endfor %}
+
+
+                </tbody>
+
+            </table>
+
+
+            {% else %}
+
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    👥
+                </div>
+
+                <h3>
+                    No Patients Found
+                </h3>
+
+                <p>
+                    No assessment records match your search.
+                </p>
+
+            </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- ==========================================
+     FOOTER
+========================================== -->
+
+<footer class="footer">
+
+    © 2026 StrokeSense. All rights reserved.
+
+</footer>
+
+
+</body>
+
+</html>

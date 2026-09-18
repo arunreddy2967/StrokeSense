@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>StrokeSense | Dashboard</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #ffffff;
+            color: #123f70;
+        }
+
+        .page {
+            width: 760px;
+            max-width: 94%;
+            margin: 0 auto;
+            padding: 25px 0 45px;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 0 0 22px;
+            font-size: 25px;
+            color: #124a86;
+        }
+
+
+        /* =========================
+           NAVIGATION
+           ========================= */
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            border-bottom: 1px solid #e5e9ee;
+            margin-bottom: 22px;
+        }
+
+        .tabs button {
+            appearance: none;
+            -webkit-appearance: none;
+            background: transparent;
+            border: none;
+            outline: none;
+
+            color: #124a86;
+
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+
+            padding: 10px 20px;
+
+            border-bottom: 2px solid transparent;
+
+            cursor: pointer;
+        }
+
+        .tabs button:hover {
+            color: #1595a5;
+        }
+
+        .tabs button.active {
+            color: #1595a5;
+            border-bottom-color: #24c4d0;
+        }
+
+
+        /* SETTINGS LINK */
+
+        .settings-link {
+            display: inline-block;
+
+            text-decoration: none;
+
+            color: #124a86;
+
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+
+            padding: 10px 20px;
+
+            border-bottom: 2px solid transparent;
+
+            cursor: pointer;
+        }
+
+        .settings-link:hover {
+            color: #1595a5;
+        }
+
+
+        /* =========================
+           METRICS
+           ========================= */
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .metric {
+            border: 1px solid #e7ebef;
+            border-radius: 9px;
+            padding: 17px 16px;
+            min-height: 95px;
+
+            box-shadow:
+                0 3px 12px rgba(0,0,0,0.04);
+        }
+
+        .metric-title {
+            font-size: 10px;
+            font-weight: 700;
+            color: #657381;
+            margin-bottom: 7px;
+        }
+
+        .metric-value {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0e4b88;
+        }
+
+        .metric-text {
+            margin-top: 7px;
+            font-size: 9px;
+            color: #87919b;
+        }
+
+
+        /* =========================
+           CHARTS
+           ========================= */
+
+        .charts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .chart-card {
+            border: 1px solid #e4e9ee;
+            border-radius: 9px;
+            padding: 16px 17px;
+            height: 255px;
+
+            box-shadow:
+                0 3px 12px rgba(0,0,0,0.035);
+        }
+
+        .chart-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #124a86;
+
+            padding-bottom: 9px;
+
+            border-bottom:
+                1px solid #edf0f2;
+
+            margin-bottom: 8px;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 190px;
+        }
+
+
+        /* =========================
+           FOOTER
+           ========================= */
+
+        footer {
+            margin-top: 60px;
+            font-size: 10px;
+            color: #4f5962;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+           ========================= */
+
+        @media (max-width: 700px) {
+
+            .page {
+                width: 94%;
+            }
+
+            .metrics {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .charts {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                flex-wrap: wrap;
+            }
+
+            .tabs button,
+            .settings-link {
+                padding: 10px 12px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+    <!-- =========================
+         PAGE TITLE
+         ========================= -->
+
+    <h1>
+        Dashboard
+    </h1>
+
+
+    <!-- =========================
+         NAVIGATION
+         ========================= -->
+
+    <div class="tabs">
+
+        <button
+            type="button"
+            class="active"
+            onclick="window.location.href='/dashboard'">
+
+            Assessments
+
+        </button>
+
+
+        <button
+            type="button"
+            onclick="window.location.href='/analytics'">
+
+            Analytics
+
+        </button>
+
+
+        <button
+            type="button"
+            onclick="window.location.href='/patients'">
+
+            Patients
+
+        </button>
+
+
+        <button
+            type="button"
+            onclick="window.location.href='/reports'">
+
+            Reports
+
+        </button>
+
+
+        <a
+            href="/settings"
+            class="settings-link">
+
+            Settings
+
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         METRICS
+         ========================= -->
+
+    <div class="metrics">
+
+
+        <div class="metric">
+
+            <div class="metric-title">
+                Total Assessments
+            </div>
+
+            <div class="metric-value">
+                {{ total }}
+            </div>
+
+            <div class="metric-text">
+                All assessments
+            </div>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div class="metric-title">
+                High Risk
+            </div>
+
+            <div class="metric-value">
+                {{ high_risk }}
+            </div>
+
+            <div class="metric-text">
+                Elevated risk assessments
+            </div>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div class="metric-title">
+                Low Risk
+            </div>
+
+            <div class="metric-value">
+                {{ low_risk }}
+            </div>
+
+            <div class="metric-text">
+                Lower risk assessments
+            </div>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div class="metric-title">
+                Average Risk
+            </div>
+
+            <div class="metric-value">
+                {{ average_risk }}%
+            </div>
+
+            <div class="metric-text">
+                Average estimated risk
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         CHARTS
+         ========================= -->
+
+    <div class="charts">
+
+
+        <!-- RISK DISTRIBUTION -->
+
+        <div class="chart-card">
+
+            <div class="chart-title">
+                Risk Distribution
+            </div>
+
+            <div class="chart-container">
+
+                <canvas id="riskChart"></canvas>
+
+            </div>
+
+        </div>
+
+
+        <!-- AGE VS RISK -->
+
+        <div class="chart-card">
+
+            <div class="chart-title">
+                Age vs Risk
+            </div>
+
+            <div class="chart-container">
+
+                <canvas id="ageChart"></canvas>
+
+            </div>
+
+        </div>
+
+
+        <!-- GLUCOSE VS RISK -->
+
+        <div class="chart-card">
+
+            <div class="chart-title">
+                Glucose Level vs Risk
+            </div>
+
+            <div class="chart-container">
+
+                <canvas id="glucoseChart"></canvas>
+
+            </div>
+
+        </div>
+
+
+        <!-- BMI VS RISK -->
+
+        <div class="chart-card">
+
+            <div class="chart-title">
+                BMI vs Risk
+            </div>
+
+            <div class="chart-container">
+
+                <canvas id="bmiChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         FOOTER
+         ========================= -->
+
+    <footer>
+
+        © 2026 StrokeSense. All rights reserved.
+
+    </footer>
+
+
+</div>
+
+
+<script>
+
+
+    /* =========================
+       FLASK DATA
+       ========================= */
+
+    const riskDistribution =
+        {{ risk_distribution_data | default([0, 0]) | tojson }};
+
+
+    const ageRisk =
+        {{ age_risk_data | default([]) | tojson }};
+
+
+    const glucoseRisk =
+        {{ glucose_risk_data | default([]) | tojson }};
+
+
+    const bmiRisk =
+        {{ bmi_risk_data | default([]) | tojson }};
+
+
+    /* =========================
+       RISK PERCENTAGE
+       ========================= */
+
+    function riskToPercentage(value) {
+
+        let number = Number(value);
+
+        if (!Number.isFinite(number)) {
+            return 0;
+        }
+
+        if (number <= 1) {
+            return number * 100;
+        }
+
+        return number;
+    }
+
+
+    /* =========================
+       RISK DISTRIBUTION
+       ========================= */
+
+    new Chart(
+        document.getElementById("riskChart"),
+        {
+
+            type: "doughnut",
+
+            data: {
+
+                labels: [
+                    "High Risk",
+                    "Low Risk"
+                ],
+
+                datasets: [{
+
+                    data: [
+
+                        Number(riskDistribution[0]) || 0,
+
+                        Number(riskDistribution[1]) || 0
+
+                    ],
+
+                    backgroundColor: [
+                        "#f39a18",
+                        "#1768a8"
+                    ],
+
+                    borderWidth: 0
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: {
+
+                        position: "bottom",
+
+                        labels: {
+
+                            boxWidth: 28,
+
+                            font: {
+                                size: 10
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+    );
+
+
+    /* =========================
+       AGE VS RISK
+       ========================= */
+
+    new Chart(
+        document.getElementById("ageChart"),
+        {
+
+            type: "scatter",
+
+            data: {
+
+                datasets: [{
+
+                    label: "Risk Probability",
+
+                    data: ageRisk.map(function(item) {
+
+                        return {
+
+                            x: Number(item.x),
+
+                            y: riskToPercentage(item.y)
+
+                        };
+
+                    }),
+
+                    backgroundColor: "#9145b6",
+
+                    borderColor: "#9145b6",
+
+                    pointRadius: 5
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                scales: {
+
+                    x: {
+
+                        type: "linear",
+
+                        title: {
+
+                            display: true,
+
+                            text: "Age"
+
+                        }
+
+                    },
+
+                    y: {
+
+                        min: 0,
+
+                        max: 100,
+
+                        title: {
+
+                            display: true,
+
+                            text: "Risk Percentage"
+
+                        }
+
+                    }
+
+                },
+
+                plugins: {
+
+                    legend: {
+
+                        position: "bottom"
+
+                    }
+
+                }
+
+            }
+
+        }
+    );
+
+
+    /* =========================
+       GLUCOSE VS RISK
+       ========================= */
+
+    new Chart(
+        document.getElementById("glucoseChart"),
+        {
+
+            type: "scatter",
+
+            data: {
+
+                datasets: [{
+
+                    label: "Risk Probability",
+
+                    data: glucoseRisk.map(function(item) {
+
+                        return {
+
+                            x: Number(item.x),
+
+                            y: riskToPercentage(item.y)
+
+                        };
+
+                    }),
+
+                    backgroundColor: "#16a085",
+
+                    borderColor: "#16a085",
+
+                    pointRadius: 5
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                scales: {
+
+                    x: {
+
+                        type: "linear",
+
+                        title: {
+
+                            display: true,
+
+                            text: "Average Glucose Level"
+
+                        }
+
+                    },
+
+                    y: {
+
+                        min: 0,
+
+                        max: 100,
+
+                        title: {
+
+                            display: true,
+
+                            text: "Risk Percentage"
+
+                        }
+
+                    }
+
+                },
+
+                plugins: {
+
+                    legend: {
+
+                        position: "bottom"
+
+                    }
+
+                }
+
+            }
+
+        }
+    );
+
+
+    /* =========================
+       BMI VS RISK
+       ========================= */
+
+    new Chart(
+        document.getElementById("bmiChart"),
+        {
+
+            type: "scatter",
+
+            data: {
+
+                datasets: [{
+
+                    label: "Risk Probability",
+
+                    data: bmiRisk.map(function(item) {
+
+                        return {
+
+                            x: Number(item.x),
+
+                            y: riskToPercentage(item.y)
+
+                        };
+
+                    }),
+
+                    backgroundColor: "#27ae60",
+
+                    borderColor: "#27ae60",
+
+                    pointRadius: 5
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                scales: {
+
+                    x: {
+
+                        type: "linear",
+
+                        title: {
+
+                            display: true,
+
+                            text: "BMI"
+
+                        }
+
+                    },
+
+                    y: {
+
+                        min: 0,
+
+                        max: 100,
+
+                        title: {
+
+                            display: true,
+
+                            text: "Risk Percentage"
+
+                        }
+
+                    }
+
+                },
+
+                plugins: {
+
+                    legend: {
+
+                        position: "bottom"
+
+                    }
+
+                }
+
+            }
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,4 @@
+Model,Accuracy,Precision,Recall,F1-Score,ROC-AUC,True Negative,False Positive,False Negative,True Positive,Best Parameters
+Logistic Regression,0.7407045009784736,0.13559322033898305,0.8,0.2318840579710145,0.840679012345679,717,255,10,40,"{'model__C': 0.01, 'model__class_weight': 'balanced'}"
+Decision Tree,0.6526418786692759,0.10796915167095116,0.84,0.19134396355353075,0.8241769547325102,625,347,8,42,"{'model__class_weight': 'balanced', 'model__max_depth': 3, 'model__min_samples_leaf': 1, 'model__min_samples_split': 2}"
+Random Forest,0.9510763209393346,0.0,0.0,0.0,0.8398559670781893,972,0,50,0,"{'model__class_weight': None, 'model__max_depth': 5, 'model__min_samples_leaf': 2, 'model__n_estimators': 200}"

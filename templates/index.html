@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StrokeSense | Home</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <header class="navbar">
+
+        <div class="logo">
+            <span class="logo-icon">🧠</span>
+            <span>Stroke<span class="logo-highlight">Sense</span></span>
+        </div>
+
+        <nav>
+            <a href="{{ url_for('home') }}" class="active">Home</a>
+            <a href="{{ url_for('risk_assessment') }}">Risk Assessment</a>
+            <a href="{{ url_for('history') }}">Assessment History</a>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('account') }}">Account</a>
+        </nav>
+
+    </header>
+
+
+    <!-- Hero Section -->
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Know Your<br>
+                <span>Stroke Risk</span>
+            </h1>
+
+            <p>
+                Complete a simple health assessment to understand
+                your estimated stroke risk.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="{{ url_for('risk_assessment') }}" class="btn primary-btn">
+                    Start Risk Assessment
+                </a>
+
+                <a href="{{ url_for('about') }}" class="btn secondary-btn">
+                    Learn More
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- Visual Area -->
+        <div class="hero-visual">
+
+            <div class="circle circle-one"></div>
+            <div class="circle circle-two"></div>
+
+            <div class="brain-icon">
+                🧠
+            </div>
+
+            <div class="medical-plus">
+                +
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Feature Cards -->
+    <section class="features" id="features">
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                ▣
+            </div>
+
+            <div>
+                <h2>Health Assessment</h2>
+
+                <p>
+                    Complete a simple assessment about your
+                    health and lifestyle.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                ♡
+            </div>
+
+            <div>
+                <h2>Stroke Risk Factors</h2>
+
+                <p>
+                    Learn about factors that can influence
+                    your stroke risk.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                ◷
+            </div>
+
+            <div>
+                <h2>Assessment History</h2>
+
+                <p>
+                    View and track your past assessments
+                    over time.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                ▤
+            </div>
+
+            <div>
+                <h2>Health Information</h2>
+
+                <p>
+                    Access trusted resources and guides
+                    about stroke prevention.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+
+        © 2026 StrokeSense.
+
+    </footer>
+
+</body>
+</html>

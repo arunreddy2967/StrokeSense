@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StrokeSense | Reports</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #ffffff;
+            color: #123f70;
+        }
+
+        .navbar {
+            height: 58px;
+            border-bottom: 1px solid #eeeeee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+        }
+
+        .logo {
+            font-size: 14px;
+            font-weight: 700;
+            color: #124a86;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-size: 10px;
+            font-weight: 600;
+            color: #124a86;
+        }
+
+        .page {
+            width: 900px;
+            max-width: 94%;
+            margin: 0 auto;
+            padding: 25px 0 45px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin: 0 0 22px;
+            color: #124a86;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            border-bottom: 1px solid #e5e9ee;
+            margin-bottom: 20px;
+        }
+
+        .tabs a {
+            text-decoration: none;
+            color: #124a86;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tabs a.active {
+            color: #1595a5;
+            border-bottom-color: #24c4d0;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .card {
+            border: 1px solid #e4e9ee;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+        }
+
+        .card-title {
+            font-size: 9px;
+            font-weight: 600;
+            color: #657381;
+            margin-bottom: 7px;
+        }
+
+        .card-value {
+            font-size: 21px;
+            font-weight: 700;
+            color: #0e4b88;
+        }
+
+        .report-box {
+            border: 1px solid #e4e9ee;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+        }
+
+        .report-header {
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e4e9ee;
+        }
+
+        .report-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #124a86;
+        }
+
+        .print-button {
+            border: none;
+            background: #1768a8;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .print-button:hover {
+            background: #0e4f82;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10px;
+        }
+
+        th {
+            background: #f4f8fb;
+            color: #124a86;
+            text-align: left;
+            padding: 11px 9px;
+            font-weight: 700;
+            border-bottom: 1px solid #e3e8ec;
+        }
+
+        td {
+            padding: 11px 9px;
+            border-bottom: 1px solid #edf0f2;
+            color: #40566d;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .risk-high {
+            display: inline-block;
+            background: #ffe4e4;
+            color: #e13b3b;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 8px;
+            font-weight: 700;
+        }
+
+        .risk-low {
+            display: inline-block;
+            background: #e5f7ef;
+            color: #16875b;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 8px;
+            font-weight: 700;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 35px;
+            color: #7c8791;
+            font-size: 11px;
+        }
+
+        .note {
+            margin-top: 16px;
+            padding: 12px 14px;
+            background: #f7fafc;
+            border-left: 3px solid #24a9b7;
+            font-size: 9px;
+            color: #5d6974;
+        }
+
+        footer {
+            margin-top: 45px;
+            font-size: 9px;
+            color: #4f5962;
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                padding: 0 4%;
+            }
+
+            .nav-links {
+                gap: 8px;
+            }
+
+            .summary {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .tabs {
+                overflow-x: auto;
+            }
+
+            .tabs a {
+                padding: 10px 12px;
+                white-space: nowrap;
+            }
+        }
+
+        @media print {
+
+            .navbar,
+            .tabs,
+            .print-button,
+            footer {
+                display: none;
+            }
+
+            .page {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            body {
+                background: white;
+            }
+
+            .report-box,
+            .card {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <div class="logo">
+        🧠 Stroke Sense
+    </div>
+
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/risk-assessment">Risk Assessment</a>
+        <a href="/history">Assessment History</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/account">Account</a>
+    </div>
+
+</div>
+
+
+<div class="page">
+
+    <h1>Reports</h1>
+
+
+    <div class="tabs">
+
+        <a href="/dashboard">
+            Assessments
+        </a>
+
+        <a href="/analytics">
+            Analytics
+        </a>
+
+        <a href="/patients">
+            Patients
+        </a>
+
+        <a href="/reports" class="active">
+            Reports
+        </a>
+
+        <a href="#">
+            Settings
+        </a>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="summary">
+
+        <div class="card">
+            <div class="card-title">
+                Total Assessments
+            </div>
+
+            <div class="card-value">
+                {{ total }}
+            </div>
+        </div>
+
+
+        <div class="card">
+            <div class="card-title">
+                High Risk
+            </div>
+
+            <div class="card-value">
+                {{ high_risk }}
+            </div>
+        </div>
+
+
+        <div class="card">
+            <div class="card-title">
+                Low Risk
+            </div>
+
+            <div class="card-value">
+                {{ low_risk }}
+            </div>
+        </div>
+
+
+        <div class="card">
+            <div class="card-title">
+                Average Risk
+            </div>
+
+            <div class="card-value">
+                {{ average_risk }}%
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- REPORT -->
+
+    <div class="report-box">
+
+        <div class="report-header">
+
+            <div class="report-title">
+                Assessment Report
+            </div>
+
+            <button
+                class="print-button"
+                onclick="window.print()">
+                Print Report
+            </button>
+
+        </div>
+
+
+        {% if assessments %}
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Assessment ID</th>
+                        <th>Date</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Glucose</th>
+                        <th>BMI</th>
+                        <th>Risk %</th>
+                        <th>Category</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                {% for assessment in assessments %}
+
+                    <tr>
+
+                        <td>
+                            AS-{{ "%03d"|format(assessment.assessment_id) }}
+                        </td>
+
+                        <td>
+                            {{ assessment.assessment_date }}
+                        </td>
+
+                        <td>
+                            {{ "%.0f"|format(assessment.age) }}
+                        </td>
+
+                        <td>
+                            {{ assessment.gender }}
+                        </td>
+
+                        <td>
+                            {{ "%.2f"|format(assessment.avg_glucose_level) }}
+                        </td>
+
+                        <td>
+                            {% if assessment.bmi is not none %}
+                                {{ "%.1f"|format(assessment.bmi) }}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {{ "%.2f"|format(assessment.risk_probability * 100) }}%
+                        </td>
+
+                        <td>
+
+                            {% if assessment.risk_category == "HIGH RISK" %}
+
+                                <span class="risk-high">
+                                    HIGH RISK
+                                </span>
+
+                            {% else %}
+
+                                <span class="risk-low">
+                                    LOW RISK
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="empty">
+            No assessment records are available.
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="note">
+        This report presents machine-learning-based risk estimates from recorded assessments.
+        It is intended for preliminary risk assessment and does not replace professional medical diagnosis.
+    </div>
+
+
+    <footer>
+        © 2026 StrokeSense. All rights reserved.
+    </footer>
+
+</div>
+
+</body>
+</html>
