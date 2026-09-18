@@ -1,11 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import mysql.connector
 import joblib
+import os
 import json
 import pandas as pd
+from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -38,10 +41,10 @@ def get_db_connection():
     try:
 
         connection = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="strokesense123",
-            database="strokesense"
+            host=os.getenv("DB_HOST", "localhost"),
+            user=os.getenv("DB_USER", "root"),
+            password=os.getenv("DB_PASSWORD"),
+            database=os.getenv("DB_NAME", "strokesense")
         )
 
         return connection
