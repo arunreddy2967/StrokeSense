@@ -1,6 +1,9 @@
+
+import traceback
 from flask import Flask, render_template, request, redirect, url_for, session
 import mysql.connector
 import joblib
+import sklearn
 import os
 import json
 import pandas as pd
@@ -21,6 +24,17 @@ app.secret_key = "strokesense-secret-key"
 
 MODEL_PATH = "models/best_model.pkl"
 MODEL_INFO_PATH = "models/model_info.json"
+
+# The saved model was created with scikit-learn 1.9.0.
+# Load it with the same version to avoid pickle compatibility errors.
+EXPECTED_SKLEARN_VERSION = "1.9.0"
+
+if sklearn.__version__ != EXPECTED_SKLEARN_VERSION:
+    raise RuntimeError(
+        f"Incompatible scikit-learn version: {sklearn.__version__}. "
+        f"This model requires scikit-learn=={EXPECTED_SKLEARN_VERSION}. "
+        "Activate the project virtual environment and install the matching version."
+    )
 
 model = joblib.load(MODEL_PATH)
 
@@ -597,15 +611,14 @@ def risk_assessment():
 
         except Exception as error:
 
-            print(
-                "Prediction error:",
-                error
-            )
+            print("\n========== RISK ASSESSMENT ERROR ==========")
+            traceback.print_exc()
+            print("===========================================\n")
 
             return (
                 f"Error during risk assessment: "
                 f"{error}"
-            )
+            ), 500
 
     return render_template(
         "assessment.html"
